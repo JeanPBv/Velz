@@ -7,11 +7,9 @@ class Tables {
     val USER_NAME = "nombre"
     val USER_LASTNAME = "apellido"
     val USER_EMAIL = "email"
-    val USER_PASSWORD = "password"
     val USER_PHONE = "phone"
-    val USER_POINTS = "puntos"
-    val USER_ISACTIVE = "isActive"
-    val USER_ISDELETE = "isDelete"
+    val USER_DNI = "dni"
+    val USER_PASSWORD = "password"
     val USER_CREATEDAT = "createdAT"
     val USER_UPDATEDAT = "updatedAT"
 
@@ -20,14 +18,12 @@ class Tables {
             + USER_NAME + " TEXT,"
             + USER_LASTNAME + " TEXT,"
             + USER_EMAIL + " TEXT,"
-            + USER_PASSWORD + " TEXT,"
             + USER_PHONE + " TEXT,"
-            + USER_POINTS + " INTEGER,"
-            + USER_ISACTIVE + " INTEGER,"
-            + USER_ISDELETE + " INTEGER,"
+            + USER_DNI + " TEXT,"
+            + USER_PASSWORD + " TEXT,"
             + USER_CREATEDAT + " TEXT,"
             + USER_UPDATEDAT + " TEXT"
-            + ")")
-
+            + ")"
+    )
 
 }
