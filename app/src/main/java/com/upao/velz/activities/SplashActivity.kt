@@ -13,10 +13,20 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        findViewById<View>(R.id.main).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+        val sharedPreferences = getSharedPreferences("appPrefs", MODE_PRIVATE)
+        val isFirstRun = sharedPreferences.getBoolean("isFirstRun", true)
+
+        if(isFirstRun){
+            sharedPreferences.edit().putBoolean("isFirstRun", false).apply()
+            startActivity(Intent(this, WelcomeActivity::class.java))
             finish()
-        }, 3000)
+
+        } else{
+            findViewById<View>(R.id.main).postDelayed({
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }, 3000)
+        }
 
     }
 }
