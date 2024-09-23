@@ -1,15 +1,22 @@
 package com.upao.velz.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.MotionEvent
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityRegisterBinding
@@ -20,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private val userController = UserController(this)
     private lateinit var binding: ActivityRegisterBinding
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +35,15 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val registerButton: Button = findViewById(R.id.btnRegistrar)
+        val termsCheckbox: CheckBox = findViewById(R.id.checkBoxTerminos)
 
         registerButton.setOnClickListener {
+
+            if (!termsCheckbox.isChecked) {
+                Toast.makeText(this, "Debes aceptar los Términos de servicio y la Política de privacidad", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val nombre = findViewById<EditText>(R.id.inputNameText).text.toString()
             val apellido = findViewById<EditText>(R.id.inputLastNameText).text.toString()
             val email = findViewById<EditText>(R.id.inputEmailText).text.toString()
@@ -60,28 +75,35 @@ class RegisterActivity : AppCompatActivity() {
 
             if (!isPhoneValid(phone)) {
                 binding.inputPhoneText.error = "Número de teléfono no válido."
-                Toast.makeText(this, "Número de teléfono no válido. Debe tener 9 caracteres y comenzar con un 9.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Número de teléfono no válido. Debe tener 9 dígityos y comenzar con un 9.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!isDniValid(dni)) {
+                binding.inputDniText.error = "Número de Dni no válido."
+                Toast.makeText(this, "Número de Dni no válido. Debe tener 8 dígitos.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             userController.registerUser(this, user)
+            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
 
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
 
         }
 
-
-
-
-        // se extrae la variable de la vista
         val login = findViewById<TextView>(R.id.textLogin)
 
-        // Si se presiona redirige a Login
         login.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-
+        val passwordEditText = findViewById<EditText>(R.id.inputPasswordText)
+        val confirmPasswordEditText = findViewById<EditText>(R.id.inputConfirmPasswordText)
+        setupPasswordToggle(passwordEditText)
+        setupPasswordToggle(confirmPasswordEditText)
 
     }
 
@@ -97,7 +119,42 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun isPhoneValid(phone: String): Boolean {
         val phonePattern = "^9\\d{8}\$"
-        return Pattern.matches(phonePattern, phone)
+        return Pattern.matches(phonePattern, phone) && phone.length == 9
+    }
+
+    private fun isDniValid(dni: String): Boolean {
+        val dniPattern = "^[0-9]{8}\$"
+        return Pattern.matches(dniPattern, dni) && dni.length == 8
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupPasswordToggle(editText: EditText){
+        val drawableEnd = ContextCompat.getDrawable(this, R.drawable.baseline_visibility)
+        val drawableEndOff = ContextCompat.getDrawable(this, R.drawable.baseline_visibility_off)
+
+        editText.setOnTouchListener { v, event ->
+            val DRAWABLE_END = 2
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (editText.right - editText.compoundDrawables[DRAWABLE_END].bounds.width())) {
+                    if (isPasswordVisible) {
+                        editText.transformationMethod = PasswordTransformationMethod.getInstance()
+                        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEndOff, null)
+                    } else {
+
+                        editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEnd, null)
+                    }
+
+                    isPasswordVisible = !isPasswordVisible
+
+                    editText.setSelection(editText.text.length)
+
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
     }
 
 }
