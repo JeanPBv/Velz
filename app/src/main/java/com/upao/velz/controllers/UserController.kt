@@ -10,11 +10,15 @@ class UserController(context: Context) {
 
     private val userService = UserService(context)
 
-    fun registerUser(context: Context, user: User){
-        userService.registerUser(context, user)
-    }
-    fun loginUser(context: Context, email: String, password: String): Boolean{
-       return userService.loginUser(context, email, password)
+    fun registerUser(user: User){
+        userService.registerUser(user)
     }
 
+    /*fun loginUser(context: Context, email: String, password: String): Boolean{
+       return userService.loginUser(context, email, password)
+    }*/
+
+    fun loginUser(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+        userService.loginUser(email, password, onResult)
+    }
 }

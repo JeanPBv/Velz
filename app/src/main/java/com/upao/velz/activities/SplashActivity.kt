@@ -17,8 +17,8 @@ class SplashActivity : AppCompatActivity() {
         val isFirstRun = sharedPreferences.getBoolean("isFirstRun", true)
 
         if(isFirstRun){
-            sharedPreferences.edit().putBoolean("isFirstRun", false).apply()
             startActivity(Intent(this, WelcomeActivity::class.java))
+            sharedPreferences.edit().putBoolean("isFirstRun", false).apply()
             finish()
 
         } else{

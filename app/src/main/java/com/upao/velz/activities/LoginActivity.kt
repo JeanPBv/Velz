@@ -55,13 +55,13 @@ class LoginActivity : AppCompatActivity() {
             }
 
 
-            // extraer booleano de confirmacion
-            val success = userController.loginUser(this,email, password)
-
-            //si se encontro, se redirige
-            if (success) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+            userController.loginUser(email, password) { success, error ->
+                if (success) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, error ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                }
             }
 
         }

@@ -85,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            userController.registerUser(this, user)
+            userController.registerUser(user)
             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, MainActivity::class.java)
