@@ -22,9 +22,8 @@
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="60dp"
         android:text="Donde los dientes es nuestra prioridad"
         android:textColor="#677294"
         android:textSize="16sp" />
@@ -60,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/rounded_button_background"
         android:padding="12dp"
@@ -73,7 +72,7 @@
         android:id="@+id/textRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:text="@string/user_Registro"
         android:textColor="#00C853"
         android:textSize="14sp" />
