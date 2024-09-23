@@ -14,7 +14,7 @@ class UserService(context: Context) {
         userRepository.registerUser(context, user)
     }
 
-    fun loginUser(context: Context, email: String, password: String){
-        userRepository.loginUser(context, email,password)
+    fun loginUser(context: Context, email: String, password: String): Boolean{
+        return userRepository.loginUser(context, email,password)
     }
 }

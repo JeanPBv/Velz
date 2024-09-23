@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         // se extrae la variable de la vista
         val login = findViewById<TextView>(R.id.textLogin)
 
-        // Si se presiona redirije a Login
+        // Si se presiona redirige a Login
         login.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

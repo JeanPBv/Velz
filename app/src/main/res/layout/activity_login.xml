@@ -26,6 +26,7 @@
             android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="Donde los dientes es nuestra prioridad"
             android:textColor="#677294"
             android:textSize="16sp"
@@ -35,10 +36,12 @@
 
 
         <EditText
-            android:id="@+id/inputEmailText"
+            android:id="@+id/emailLogin"
             android:hint="itsmemamun1@gmail.com"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:padding="12dp"
@@ -46,21 +49,23 @@
             android:drawableEnd="@drawable/vector_check" />
 
         <EditText
-            android:id="@+id/inputPasswordText"
+            android:id="@+id/passwordLogin"
             android:hint="********"
             android:inputType="textPassword"
             android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:padding="12dp"
             android:background="@drawable/edittext_background"
-            android:drawableEnd="@drawable/vector_eye" />
+            android:drawableEnd="@drawable/baseline_visibility_off" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Inciar Sesion"
             android:textColor="#FFFFFF"
             android:layout_marginTop="100dp"
             android:layout_marginLeft="30dp"
@@ -71,10 +76,10 @@
 
         <!-- Enlace para crear una cuenta -->
         <TextView
-            android:id="@+id/textJoinUs"
+            android:id="@+id/textRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Join us"
+            android:text="@string/user_Registro"
             android:textColor="#00C853"
             android:layout_marginTop="200dp"
             android:textSize="14sp" />

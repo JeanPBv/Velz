@@ -13,8 +13,8 @@ class UserController(context: Context) {
     fun registerUser(context: Context, user: User){
         userService.registerUser(context, user)
     }
-    fun loginUser(context: Context, email: String, password: String){
-        userService.loginUser(context, email, password)
+    fun loginUser(context: Context, email: String, password: String): Boolean{
+       return userService.loginUser(context, email, password)
     }
 
 }

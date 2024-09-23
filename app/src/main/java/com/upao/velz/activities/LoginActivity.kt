@@ -1,15 +1,23 @@
 package com.upao.velz.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityLoginBinding
 import com.upao.velz.models.LoginModel
+import java.util.regex.Pattern
 
 
 class LoginActivity : AppCompatActivity() {
@@ -19,27 +27,104 @@ class LoginActivity : AppCompatActivity() {
     // declaracion del binding
     private lateinit var binding: ActivityLoginBinding
 
-
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
          binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_login)
 
         val buttonLogin : Button = findViewById(R.id.btnLogin)
 
         buttonLogin.setOnClickListener{
 
-            var password: String = findViewById<EditText>(R.id.inputEmailText).text.toString()
-            var email:String = findViewById<EditText>(R.id.inputPasswordText).text.toString()
+            var password: String = findViewById<EditText>(R.id.passwordLogin).text.toString()
+            var email:String = findViewById<EditText>(R.id.emailLogin).text.toString()
+
+            if (!isEmailValid(email)) {
+                binding.emailLogin.error = "Correo electrónico no válido"
+                Toast.makeText(this, "Correo electrónico no válido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!isPasswordValid(password)) {
+                binding.passwordLogin.error = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial"
+                Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
 
-            var success = userController.loginUser(this,email, password)
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            // extraer booleano de confirmacion
+            val success = userController.loginUser(this,email, password)
+
+            //si se encontro, se redirige
+            if (success) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
 
         }
 
+        // se extrae la variable de la vista
+        val registro = findViewById<TextView>(R.id.textRegister)
+
+        registro.setOnClickListener{
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+        val PasswordEditText = findViewById<EditText>(R.id.passwordLogin)
+        setupPasswordToggle(PasswordEditText)
+
+
     }
+
+    private fun isEmailValid(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return Pattern.matches(emailPattern, email)
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$"
+        return Pattern.matches(passwordPattern, password)
+    }
+
+
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupPasswordToggle(editText: EditText){
+        val drawableEnd = ContextCompat.getDrawable(this, R.drawable.baseline_visibility)
+        val drawableEndOff = ContextCompat.getDrawable(this, R.drawable.baseline_visibility_off)
+
+        editText.setOnTouchListener { v, event ->
+            val DRAWABLE_END = 2
+
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= (editText.right - editText.compoundDrawables[DRAWABLE_END].bounds.width())) {
+                    if (isPasswordVisible) {
+                        editText.transformationMethod = PasswordTransformationMethod.getInstance()
+                        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEndOff, null)
+                    } else {
+
+                        editText.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableEnd, null)
+                    }
+
+                    isPasswordVisible = !isPasswordVisible
+
+                    editText.setSelection(editText.text.length)
+
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+    }
+
+
+
+
+
 }
