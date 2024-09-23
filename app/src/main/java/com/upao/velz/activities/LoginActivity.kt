@@ -16,7 +16,6 @@ import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityLoginBinding
-import com.upao.velz.models.LoginModel
 import java.util.regex.Pattern
 
 

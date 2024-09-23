@@ -2,7 +2,6 @@ package com.upao.velz.services
 
 import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Email
-import com.upao.velz.models.LoginModel
 import com.upao.velz.models.User
 import com.upao.velz.repositories.UserRepository
 

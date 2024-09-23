@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Email
 import com.google.firebase.auth.FirebaseAuth
-import com.upao.velz.models.LoginModel
 import com.upao.velz.models.User
 import com.upao.velz.sqlite.DbHelper
 import java.text.SimpleDateFormat
