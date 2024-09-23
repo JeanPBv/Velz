@@ -3,7 +3,7 @@ package com.upao.velz.repositories
 import android.content.ContentValues
 import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Email
-import com.upao.velz.models.LoginModel
+import com.google.firebase.auth.FirebaseAuth
 import com.upao.velz.models.User
 import com.upao.velz.sqlite.DbHelper
 import java.text.SimpleDateFormat
@@ -12,12 +12,26 @@ import java.util.Locale
 
 class UserRepository (context: Context){
     private val dbHelper = DbHelper(context)
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
-    fun registerUser(context: Context, user:User): Boolean {
+    fun registerUserFirebase(user: User):Boolean{
+        val email = user.email
+        val password = user.password
 
-        // instancia de bd modo escritura
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    registerUser(user)
+                } else {
+                    throw task.exception ?: Exception("Error al registrar usuario")
+                }
+            }
+        return true
+    }
+
+    fun registerUser(user:User): Boolean {
+
         val db = dbHelper.writableDatabase
-
         val values = ContentValues().apply {
             put("nombre", user.name)
             put("apellido", user.lastname)
@@ -36,7 +50,7 @@ class UserRepository (context: Context){
     }
 
 
-    // Login
+    /*
     fun loginUser(context: Context, email: String, password: String): Boolean {
         // Instancia de bd en modo lectura
         val db = dbHelper.readableDatabase
@@ -51,6 +65,17 @@ class UserRepository (context: Context){
         db.close()
 
         return successful
+    }*/
+
+    fun loginUser(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onResult(true, null)
+                } else {
+                    onResult(false, "Error al iniciar sesión")
+                }
+            }
     }
 
 
