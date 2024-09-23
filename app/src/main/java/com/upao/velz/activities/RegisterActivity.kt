@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,18 @@ class RegisterActivity : AppCompatActivity() {
             userController.registerUser(this, user)
 
 
+        }
+
+
+
+
+        // se extrae la variable de la vista
+        val login = findViewById<TextView>(R.id.textLogin)
+
+        // Si se presiona redirije a Login
+        login.setOnClickListener{
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
 
 

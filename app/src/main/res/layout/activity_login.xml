@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:background="@drawable/background_velz">
+
+        <TextView
+            android:id="@+id/tvWelcomeBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido de nuevo"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginTop="120dp" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donde los dientes es nuestra prioridad"
+            android:textColor="#677294"
+            android:textSize="16sp"
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="10dp" />
+
+
+
+        <EditText
+            android:id="@+id/inputEmailText"
+            android:hint="itsmemamun1@gmail.com"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:drawableEnd="@drawable/vector_check" />
+
+        <EditText
+            android:id="@+id/inputPasswordText"
+            android:hint="********"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:drawableEnd="@drawable/vector_eye" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_button_background"
+            android:padding="12dp" />
+
+        <!-- Enlace para crear una cuenta -->
+        <TextView
+            android:id="@+id/textJoinUs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Join us"
+            android:textColor="#00C853"
+            android:layout_marginTop="200dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+</ScrollView>
