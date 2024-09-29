@@ -48,15 +48,15 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (!isPasswordValid(password)) {
-                binding.passwordLogin.error = "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial"
-                Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un carácter especial", Toast.LENGTH_SHORT).show()
+                binding.passwordLogin.error = "La contraseña es incorrecta"
+                Toast.makeText(this, "La contraseña es incorrecta", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
 
             userController.loginUser(email, password) { success, error ->
                 if (success) {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, TreatmentActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, error ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
@@ -66,15 +66,18 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // se extrae la variable de la vista
-        val registro = findViewById<TextView>(R.id.textRegister)
+        val register = findViewById<TextView>(R.id.textRegister)
 
-        registro.setOnClickListener{
+        register.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
         val PasswordEditText = findViewById<EditText>(R.id.passwordLogin)
         setupPasswordToggle(PasswordEditText)
+
+
+
 
 
     }
