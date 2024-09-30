@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.upao.velz.MainActivity
 import com.upao.velz.R
+import com.upao.velz.activities.AppointmentActivity
 import com.upao.velz.models.Treatment
 
 class TreatmentAdapter(private var treatments: List<Treatment>) : RecyclerView.Adapter<TreatmentAdapter.ViewHolder>()  {
@@ -27,10 +27,10 @@ class TreatmentAdapter(private var treatments: List<Treatment>) : RecyclerView.A
             imageView.setImageResource(treatment.imageResId)
 
             btnAppointment.setOnClickListener {
-                val intent = Intent(itemView.context, MainActivity::class.java)
-
+                val intent = Intent(itemView.context, AppointmentActivity::class.java)
                 // para extraer el id del intent
                 intent.putExtra("treatment_id", treatment.id)
+                intent.putExtra("treatment_name", treatment.name)
                 itemView.context.startActivity(intent)
             }
         }
