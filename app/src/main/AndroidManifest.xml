@@ -16,6 +16,9 @@
             android:name=".activities.TreatmentActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.AppointmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.WelcomeTwoActivity"
             android:exported="false" />
         <activity

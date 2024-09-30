@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#0EBE7F</color>
+    <color name="disable">#e8f4ec</color>
 </resources>
