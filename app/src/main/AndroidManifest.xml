@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Velz"
         tools:targetApi="31">
         <activity
+            android:name=".activities.AppointmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.WelcomeTwoActivity"
             android:exported="false" />
         <activity

@@ -1,8 +1,9 @@
 package com.upao.velz.repositories
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.provider.ContactsContract.CommonDataKinds.Email
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.upao.velz.models.User
 import com.upao.velz.sqlite.DbHelper
@@ -71,6 +72,7 @@ class UserRepository (context: Context){
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+
                     onResult(true, null)
                 } else {
                     onResult(false, "Error al iniciar sesión")
@@ -78,7 +80,32 @@ class UserRepository (context: Context){
             }
     }
 
+    @SuppressLint("Range")
+    fun getUserByEmail(email: String): User? {
+        val db = dbHelper.readableDatabase
+        var user: User? = null
 
+        val cursor = db.rawQuery("SELECT * FROM usuarios WHERE email = ?" , arrayOf(email))
+
+        if (cursor.moveToFirst()) {
+            // Extraer los datos del cursor
+            val id = cursor.getInt(cursor.getColumnIndex("idUsuario"))
+            val name = cursor.getString(1)
+            val lastname = cursor.getString(2)
+            val email = cursor.getString(3)
+            val phone = cursor.getString(4)
+            val dni = cursor.getString(5)
+            val password = cursor.getString(6)
+
+            // Crear el objeto User
+            user = User(id, name, lastname, email, phone, dni, password)
+        }
+
+        cursor.close()
+        db.close()
+
+        return user
+    }
 
     private fun getCurrentDate(): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
