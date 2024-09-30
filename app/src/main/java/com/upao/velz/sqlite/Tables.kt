@@ -26,4 +26,30 @@ class Tables {
             + ")"
     )
 
+
+    //TABLA DE CITAS
+    val TABLE_APPOINTMENT = "appointments"
+    val APPOINTMENT_ID = "id"
+    val APPOINTMENT_DATE = "dateAppointment"
+    val APPOINTMENT_TIME = "timeAppointment"
+    val APPOINTMENT_DESCRIPTION = "description"
+    val APPOINTMENT_ID_USER = "idUsuario"
+    val APPOINTMENT_STATUS = "status"
+    val APPOINTMENT_REMINDER = "reminder"
+    val APPOINTMENT_CREATEDAT = "createdAT"
+    val APPOINTMENT_UPDATEDAT = "updatedAT"
+
+    val CREATE_TABLE_APPOINTMENT = ("CREATE TABLE " + TABLE_APPOINTMENT + "("
+            + APPOINTMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + APPOINTMENT_DATE + " TEXT,"
+            + APPOINTMENT_TIME + " TEXT,"
+            + APPOINTMENT_DESCRIPTION + " TEXT,"
+            + APPOINTMENT_ID_USER + " INTEGER,"
+            + APPOINTMENT_STATUS + " TEXT,"
+            + APPOINTMENT_REMINDER + " INTEGER,"
+            + APPOINTMENT_CREATEDAT + " TEXT,"
+            + APPOINTMENT_UPDATEDAT + " TEXT, "
+            + "FOREIGN KEY (" + APPOINTMENT_ID_USER + ") REFERENCES " + TABLE_USER + "(" + USER_ID + ")"
+            + ")"
+            )
 }

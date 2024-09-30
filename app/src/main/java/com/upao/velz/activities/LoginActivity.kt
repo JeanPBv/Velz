@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
 
     // declaracion del binding
     private lateinit var binding: ActivityLoginBinding
-
     private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,11 +52,11 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             userController.loginUser(email, password) { success, error ->
                 if (success) {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this, error ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                 }
