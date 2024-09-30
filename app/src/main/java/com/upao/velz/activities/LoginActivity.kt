@@ -75,10 +75,6 @@ class LoginActivity : AppCompatActivity() {
         val PasswordEditText = findViewById<EditText>(R.id.passwordLogin)
         setupPasswordToggle(PasswordEditText)
 
-
-
-
-
     }
 
     private fun isEmailValid(email: String): Boolean {
@@ -90,9 +86,6 @@ class LoginActivity : AppCompatActivity() {
         val passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$"
         return Pattern.matches(passwordPattern, password)
     }
-
-
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupPasswordToggle(editText: EditText){

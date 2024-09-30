@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -36,6 +37,7 @@ class AppointmentActivity : AppCompatActivity() {
     private var selectedDateCalendar: String = ""
     private var selectedTime: String = " "
     private var selectedReminderTime: Int? = null
+    private var treatmentName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,15 @@ class AppointmentActivity : AppCompatActivity() {
 
         val listTimes = listOf("09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00")
         createTimesButtons(listTimes)
+
+        treatmentName = intent.getStringExtra("treatment_name")
+
+        val btnBack: ImageButton = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            val intent = Intent(this,TreatmentActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
         btnConfirmar.setOnClickListener {
@@ -90,7 +101,7 @@ class AppointmentActivity : AppCompatActivity() {
                 0,
                 selectedDateCalendar,
                 selectedTime,
-                "TRATAMIENTO 1",
+                treatmentName ?: "Tratamiento no especificado",
                 user,
                 "Pendiente",
                 reminderTime
