@@ -10,4 +10,7 @@ class TreatmentService (context: Context) {
     fun getTreatmentsService(): List<Treatment>{
         return repository.getTreatmentsRepository()
     }
+    fun getTreatmentByNameService(name:String): Treatment? {
+        return repository.getTreatmentByName(name)
+    }
 }
