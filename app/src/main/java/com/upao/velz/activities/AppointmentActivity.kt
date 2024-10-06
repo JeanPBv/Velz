@@ -18,9 +18,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.AppointmentController
+import com.upao.velz.controllers.TreatmentController
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityAppointmentBinding
 import com.upao.velz.models.Appointment
+import com.upao.velz.models.Treatment
 import com.upao.velz.models.User
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -58,7 +60,6 @@ class AppointmentActivity : AppCompatActivity() {
         val listTimes = listOf("09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00")
         createTimesButtons(listTimes)
 
-        treatmentName = intent.getStringExtra("treatment_name")
 
         val btnBack: ImageButton = findViewById(R.id.btnBack)
         btnBack.setOnClickListener {
@@ -97,11 +98,15 @@ class AppointmentActivity : AppCompatActivity() {
             val userEmail = firebaseUser.email ?: "Usuario sin email"
             val userController = UserController(this)
             val user = userController.getUserByEmail(userEmail) ?: User(0, "ABC", "ABC", "ABC", "ABC", "ABC", "ABC")
+
+            treatmentName = intent.getStringExtra("treatment_name")
+            val treatmentController = TreatmentController(this)
+            val treatment : Treatment = treatmentController.getTreatmentByNameController(treatmentName.toString())!!
             val appointment = Appointment(
                 0,
                 selectedDateCalendar,
                 selectedTime,
-                treatmentName ?: "Tratamiento no especificado",
+                treatment,
                 user,
                 "Pendiente",
                 reminderTime

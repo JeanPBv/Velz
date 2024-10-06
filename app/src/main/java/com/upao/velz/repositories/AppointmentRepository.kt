@@ -17,7 +17,7 @@ class AppointmentRepository(context: Context) {
         val values = ContentValues().apply {
             put("dateAppointment", appointment.dateAppointment)
             put("timeAppointment", appointment.timeAppointment)
-            put("description", appointment.description)
+            put("description", appointment.description.name)
             put("idUsuario", appointment.user.id)
             put("status", appointment.status)
             put("reminder", appointment.reminder)

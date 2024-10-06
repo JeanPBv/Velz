@@ -10,4 +10,8 @@ class TreatmentController(context: Context){
     fun getTreatmentController(): List<Treatment>{
         return service.getTreatmentsService()
     }
+
+    fun getTreatmentByNameController(name:String): Treatment? {
+        return service.getTreatmentByNameService(name)
+    }
 }

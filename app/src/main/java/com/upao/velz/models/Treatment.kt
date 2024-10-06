@@ -6,6 +6,6 @@ data class Treatment(
     var id: UUID,
     var name: String,
     var description: String,
-    val imageResId: Int
+    val imageResId: Int,
 
 )
