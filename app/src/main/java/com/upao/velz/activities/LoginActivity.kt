@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityLoginBinding

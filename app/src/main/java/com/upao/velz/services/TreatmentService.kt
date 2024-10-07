@@ -13,4 +13,8 @@ class TreatmentService (context: Context) {
     fun getTreatmentByNameService(name:String): Treatment? {
         return repository.getTreatmentByName(name)
     }
+
+    /*fun addTreatmentService(){
+        repository.insertDefaultTreatments()
+    }*/
 }

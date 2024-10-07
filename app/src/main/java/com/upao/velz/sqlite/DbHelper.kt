@@ -16,7 +16,7 @@ class DbHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(Tables().CREATE_TABLE_USER)
         db.execSQL(Tables().CREATE_TABLE_APPOINTMENT)
-        db.execSQL(Tables().CREATE_TABLE_TREATMENT)
+        /*db.execSQL(Tables().CREATE_TABLE_TREATMENT)*/
         Log.d("DbHelper", "Tablas creadas correctamente")
     }
 
@@ -27,8 +27,8 @@ class DbHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS " + Tables().TABLE_APPOINTMENT)
         db.execSQL(Tables().CREATE_TABLE_APPOINTMENT)
 
-        db.execSQL("DROP TABLE IF EXISTS " + Tables().TABLE_TREATMENT)
-        db.execSQL(Tables().CREATE_TABLE_TREATMENT)
+        /*db.execSQL("DROP TABLE IF EXISTS " + Tables().TABLE_TREATMENT)
+        db.execSQL(Tables().CREATE_TABLE_TREATMENT)*/
 
         onCreate(db)
     }

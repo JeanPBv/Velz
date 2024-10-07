@@ -26,30 +26,6 @@ class Tables {
             + ")"
     )
 
-    //TABLA DE TRATAMIENTO
-    val TABLE_TREATMENT = "treatments"
-    val TREATMENT_ID = "idTreatment"
-    val TREATMENT_NAME = "nameTreatment"
-    val TREATMENT_DESCRIPTION = "descriptionTreatment"
-    val TREATMENT_IMG = "imgTreatment"
-    val TREATMENT_APPOINTMENT_ID = "idAppointmentTreatment"
-    val TREATMENT_CREATEDAT = "createdAT"
-    val TREATMENT_UPDATEDAT = "updatedAT"
-
-
-    val CREATE_TABLE_TREATMENT = ("CREATE TABLE " + TABLE_TREATMENT + "("
-            + TREATMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + TREATMENT_NAME + " TEXT,"
-            + TREATMENT_DESCRIPTION + " TEXT,"
-            + TREATMENT_IMG + " TEXT,"
-            + TREATMENT_APPOINTMENT_ID + " INTEGER,"
-            + TREATMENT_CREATEDAT + " TEXT,"
-            + TREATMENT_UPDATEDAT + " TEXT"
-            + ")"
-            )
-
-
-
     //TABLA DE CITAS
     val TABLE_APPOINTMENT = "appointments"
     val APPOINTMENT_ID = "id"
@@ -73,8 +49,6 @@ class Tables {
             + APPOINTMENT_CREATEDAT + " TEXT,"
             + APPOINTMENT_UPDATEDAT + " TEXT, "
             + "FOREIGN KEY (" + APPOINTMENT_ID_USER + ") REFERENCES " + TABLE_USER + "(" + USER_ID + ")"
-
-            + "FOREIGN KEY (" + APPOINTMENT_DESCRIPTION + ") REFERENCES " + TABLE_TREATMENT + "(" + TREATMENT_ID + ")"
             + ")"
             )
 
