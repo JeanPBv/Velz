@@ -14,4 +14,8 @@ class TreatmentController(context: Context){
     fun getTreatmentByNameController(name:String): Treatment? {
         return service.getTreatmentByNameService(name)
     }
+
+    /*fun addTreatmentController(){
+        service.addTreatmentService()
+    }*/
 }

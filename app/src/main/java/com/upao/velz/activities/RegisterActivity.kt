@@ -11,12 +11,8 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityRegisterBinding
@@ -38,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         val termsCheckbox: CheckBox = findViewById(R.id.checkBoxTerminos)
 
         registerButton.setOnClickListener {
+
 
             if (!termsCheckbox.isChecked) {
                 Toast.makeText(this, "Debes aceptar los Términos de servicio y la Política de privacidad", Toast.LENGTH_SHORT).show()

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.upao.velz.R
 import com.upao.velz.activities.AppointmentActivity
+import com.upao.velz.activities.DetailTreatActivity
 import com.upao.velz.models.Treatment
 
 class TreatmentAdapter(private var treatments: List<Treatment>) : RecyclerView.Adapter<TreatmentAdapter.ViewHolder>()  {
@@ -19,7 +20,7 @@ class TreatmentAdapter(private var treatments: List<Treatment>) : RecyclerView.A
         val nameTextView:TextView = view.findViewById(R.id.tv_treatment_title)
         val descriptionTextView: TextView = view.findViewById(R.id.tv_treatment_description)
         private val imageView: ImageView = view.findViewById(R.id.iv_treatment_image)
-
+        private var btnDetail: Button = itemView.findViewById(R.id.btn_details)
 
 
         fun bing(treatment: Treatment){
@@ -30,6 +31,12 @@ class TreatmentAdapter(private var treatments: List<Treatment>) : RecyclerView.A
                 val intent = Intent(itemView.context, AppointmentActivity::class.java)
                 // para extraer el id del intent
                 intent.putExtra("treatment_id", treatment.id)
+                intent.putExtra("treatment_name", treatment.name)
+                itemView.context.startActivity(intent)
+            }
+
+            btnDetail.setOnClickListener {
+                val intent = Intent(itemView.context, DetailTreatActivity::class.java)
                 intent.putExtra("treatment_name", treatment.name)
                 itemView.context.startActivity(intent)
             }

@@ -12,6 +12,7 @@ constraintlayout = "2.1.4"
 fragmentKtx = "1.4.1"
 lifecycleViewModelKtx = "2.6.1"
 recyclerview = "1.2.1"
+gson = "2.8.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,6 +26,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewModelKtx" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+gson = {group = "com.google.code.gson", name = "gson", version.ref = "gson"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
