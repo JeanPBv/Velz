@@ -107,6 +107,29 @@ class UserRepository (context: Context){
         return user
     }
 
+    @SuppressLint("Range")
+    fun getUserById(userId: Int): User? {
+        val db = dbHelper.readableDatabase
+        var user: User? = null
+
+        val cursor = db.rawQuery("SELECT * FROM usuarios WHERE idUsuario = ?", arrayOf(userId.toString()))
+
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndex("idUsuario"))
+            val name = cursor.getString(cursor.getColumnIndex("nombre"))
+            val lastname = cursor.getString(cursor.getColumnIndex("apellido"))
+            val email = cursor.getString(cursor.getColumnIndex("email"))
+            val phone = cursor.getString(cursor.getColumnIndex("phone"))
+            val dni = cursor.getString(cursor.getColumnIndex("dni"))
+            val password = cursor.getString(cursor.getColumnIndex("password"))
+            user = User(id, name, lastname, email, phone, dni, password)
+        }
+
+        cursor.close()
+        db.close()
+
+        return user
+    }
 
     private fun getCurrentDate(): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
