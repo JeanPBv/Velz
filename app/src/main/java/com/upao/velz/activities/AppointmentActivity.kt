@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.HorizontalScrollView
@@ -112,6 +113,11 @@ class AppointmentActivity : AppCompatActivity() {
                 reminderTime
             )
 
+            if (appointmentController.isAppointmentScheduled(selectedDateCalendar, selectedTime)) {
+                Toast.makeText(this, "Ya hay una cita agendada ahí", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             appointmentController.addAppointment(appointment)
 
             Toast.makeText(this, "Cita Registrada con Éxito", Toast.LENGTH_SHORT).show()
@@ -140,6 +146,8 @@ class AppointmentActivity : AppCompatActivity() {
                 hour
             }
 
+
+
             val button = Button(this).apply {
                 // Configuración de los LayoutParams
                 layoutParams = LinearLayout.LayoutParams(70.dp, 70.dp).apply {
@@ -150,6 +158,7 @@ class AppointmentActivity : AppCompatActivity() {
                 text = "$hourString\n$period"
                 setTextColor(resources.getColor(R.color.green, null))
                 setTypeface(null, Typeface.BOLD)
+
 
                 setOnClickListener {
                     if (selectedDate != null) {
