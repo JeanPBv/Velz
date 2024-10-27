@@ -9,12 +9,11 @@ class AppointmentService(context: Context) {
 
     private val appointmentRepository = AppointmentRepository(context)
 
-    fun addAppointment(appointment: Appointment){
-        appointmentRepository.addAppointment(appointment)
+    suspend fun addAppointment(appointment: Appointment): Boolean{
+        return appointmentRepository.addAppointment(appointment)
     }
 
-    fun isAppointmentScheduled(date: String, time: String): Boolean{
-        Log.d("AppointmentActivity", "Fecha seleccionada - service: $date, Hora seleccionada: $time")
+    suspend fun isAppointmentScheduled(date: String, time: String): Boolean{
         return appointmentRepository.isAppointmentScheduled(date, time)
     }
 

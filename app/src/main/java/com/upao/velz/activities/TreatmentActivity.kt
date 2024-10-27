@@ -2,6 +2,7 @@ package com.upao.velz.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -27,9 +28,10 @@ class TreatmentActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rv_treatments)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val treatments = controller.getTreatmentController()
-        adapter = TreatmentAdapter(treatments)
-        recyclerView.adapter = adapter
+        controller.getTreatmentController { treatments ->
+            adapter = TreatmentAdapter(treatments)
+            recyclerView.adapter = adapter
+        }
 
 
         val back = findViewById<ImageButton>(R.id.btnBack)
@@ -49,7 +51,7 @@ class TreatmentActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val filteredList = treatments.filter {
+                val filteredList = adapter.currentList.filter {
                     it.name.contains(newText.orEmpty(), ignoreCase = true) ||
                             it.description.contains(newText.orEmpty(), ignoreCase = true)
                 }
