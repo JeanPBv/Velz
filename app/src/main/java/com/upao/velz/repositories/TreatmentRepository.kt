@@ -32,7 +32,6 @@ class TreatmentRepository (context: Context) {
         Log.d("TreatmentActivity", "REPOSITORYU")
         val treatmentResponses = getTreatments()
 
-        Log.d("TreatmentActivity", "Treatment Responses: $treatmentResponses")
         val procedure1 = listOf(
             "1. Evaluación del estado inicial de los dientes y encías.",
             "2. Protección de las encías y tejidos blandos con un gel especial.",

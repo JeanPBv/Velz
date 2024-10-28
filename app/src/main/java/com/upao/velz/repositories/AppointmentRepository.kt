@@ -14,6 +14,7 @@ import com.upao.velz.models.Appointment
 import com.upao.velz.models.RequestModel.AppointmentRequest
 import com.upao.velz.models.Treatment
 import com.upao.velz.models.User
+import com.upao.velz.models.responseModel.AppDetailResponse
 import com.upao.velz.sqlite.DbHelper
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -70,6 +71,23 @@ class AppointmentRepository(context: Context) {
                 null
             }
         } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun getListAppointment(id: Int): List<AppDetailResponse>? {
+        Log.d("LoadAppointments123", "repos")
+        return try {
+            val response = apiService.getListAppointment(id)
+            Log.d("LoadAppointments123", "Response: ${response.body()}")
+            if (response.isSuccessful) {
+                response.body()?.appointments
+            } else {
+                Log.e("LoadAppointments123", "Error en la respuesta: ${response.errorBody()?.string()}")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("LoadAppointments123", "Exception: ${e.message}", e)
             null
         }
     }

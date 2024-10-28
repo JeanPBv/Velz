@@ -2,7 +2,8 @@ package com.upao.velz.models.responseModel
 
 import com.google.gson.annotations.SerializedName
 
-data class AppointmentResponse(
+data class AppDetailResponse(
+
     @SerializedName("id") val id: Int,
     @SerializedName("date_appointment") val dateAppointment: String,
     @SerializedName("time_appointment") val timeAppointment: String,
@@ -10,8 +11,6 @@ data class AppointmentResponse(
     @SerializedName("user_id") val userId: Int,
     @SerializedName("status") val status: String,
     @SerializedName("reminder") val reminder: Int,
-    @SerializedName("created_at") val createdAt: String,
-    @SerializedName("updated_at") val updatedAt: String
-){
+    @SerializedName("treatment") val treatment: TreatmentResponse
 
-}
+)

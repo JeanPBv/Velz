@@ -3,7 +3,9 @@ package com.upao.velz.apiLaravel
 import com.upao.velz.models.RequestModel.AppointmentRequest
 import com.upao.velz.models.RequestModel.LoginRequest
 import com.upao.velz.models.User
+import com.upao.velz.models.responseModel.AppDetailResponse
 import com.upao.velz.models.responseModel.AppointmentResponse
+import com.upao.velz.models.responseModel.ListAppResponse
 import retrofit2.Response
 import com.upao.velz.models.responseModel.TreatmentResponse
 import com.upao.velz.models.responseModel.UserResponse
@@ -35,4 +37,6 @@ interface ApiService {
     @GET("appointment/list")
     suspend fun getAppointment(): Response<List<AppointmentResponse>>
 
+    @GET("appointment/list/{id}")
+    suspend fun getListAppointment(@Path("id") id: Int): Response<ListAppResponse>
 }
