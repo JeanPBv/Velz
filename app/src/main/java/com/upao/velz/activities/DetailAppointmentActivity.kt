@@ -1,13 +1,16 @@
 package com.upao.velz.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.adapters.AppointmentAdapter
 import com.upao.velz.controllers.AppointmentController
@@ -27,6 +30,12 @@ class DetailAppointmentActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rv_appointments)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        val back = findViewById<ImageButton>(R.id.btnBack)
+        back.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         loadAppointments()
     }
 
