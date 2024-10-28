@@ -29,6 +29,7 @@ class TreatmentActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         controller.getTreatmentController { treatments ->
+            Log.d("TreatmentActivity12345", "Tratamientos recuperados: $treatments")
             adapter = TreatmentAdapter(treatments)
             recyclerView.adapter = adapter
         }

@@ -124,7 +124,7 @@ class AppointmentActivity : AppCompatActivity() {
                                 } else {
                                     appointmentController.addAppointment(appointment)
                                     Toast.makeText(this, "Cita Registrada con Éxito", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(this, MainActivity::class.java)
+                                    val intent = Intent(this, DetailAppointmentActivity::class.java)
                                     startActivity(intent)
                                 }
                             }
