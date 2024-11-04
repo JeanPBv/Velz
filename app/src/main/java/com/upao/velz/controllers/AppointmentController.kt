@@ -24,6 +24,17 @@ class AppointmentController(context: Context) : ViewModel() {
         }
     }
 
+    fun editAppointment(id: Int, appointment: Appointment) {
+        viewModelScope.launch {
+            val success = appointmentService.editAppointment(id, appointment)
+            if (success) {
+                Log.d("Cita", "Cita postergada con exito")
+            } else {
+                Log.e("Cita", "Error al postergar cita")
+            }
+        }
+    }
+
     fun isAppointmentScheduled(date: String, time: String, callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             val success = appointmentService.isAppointmentScheduled(date, time)
@@ -34,6 +45,13 @@ class AppointmentController(context: Context) : ViewModel() {
     fun getListAppointments(id: Int, callback: (List<AppDetailResponse>?) -> Unit) {
         viewModelScope.launch {
             val appointments = appointmentService.getListAppointments(id)
+            callback(appointments)
+        }
+    }
+
+    fun getAppointments(callback: (List<AppDetailResponse>?) -> Unit) {
+        viewModelScope.launch {
+            val appointments = appointmentService.getAppointments()
             callback(appointments)
         }
     }

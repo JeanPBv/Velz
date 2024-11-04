@@ -12,6 +12,7 @@ import com.upao.velz.models.responseModel.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -34,8 +35,11 @@ interface ApiService {
     @POST("appointment/add")
     suspend fun addAppointment(@Body appointRequest: AppointmentRequest): Response<AppointmentResponse>
 
+    @PUT("appointment/edit/{id}")
+    suspend fun editAppointment(@Path("id") id: Int, @Body appointmentRequest: AppointmentRequest): Response<AppointmentResponse>
+
     @GET("appointment/list")
-    suspend fun getAppointment(): Response<List<AppointmentResponse>>
+    suspend fun getAppointment(): Response<ListAppResponse>
 
     @GET("appointment/list/{id}")
     suspend fun getListAppointment(@Path("id") id: Int): Response<ListAppResponse>
