@@ -52,21 +52,11 @@ class AppointmentRepository(context: Context) {
         }
     }
 
-    suspend fun getAppointments(): List<Appointment>? {
+    suspend fun getAppointments(): List<AppDetailResponse>? {
         return try {
             val response = apiService.getAppointment()
             if (response.isSuccessful) {
-                response.body()?.map { appointmentResponse ->
-                    Appointment(
-                        id = appointmentResponse.id,
-                        dateAppointment = appointmentResponse.dateAppointment,
-                        timeAppointment = appointmentResponse.timeAppointment,
-                        treatment = appointmentResponse.treatmentId,
-                        user = appointmentResponse.userId,
-                        status = appointmentResponse.status,
-                        reminder = appointmentResponse.reminder
-                    )
-                }
+                response.body()?.appointments
             } else {
                 null
             }
@@ -97,4 +87,30 @@ class AppointmentRepository(context: Context) {
         return appointments?.any { it.dateAppointment == date && it.timeAppointment == time } ?: false
     }
 
+    suspend fun editAppointment(id: Int, appointment: Appointment): Boolean {
+        val appointmentRequest = AppointmentRequest(
+            id = appointment.id,
+            dateAppointment = appointment.dateAppointment,
+            timeAppointment = appointment.timeAppointment,
+            treatmentId = appointment.treatment,
+            userId = appointment.user,
+            reminder = appointment.reminder
+
+        )
+        Log.d("AppointmentRequest", "Request: $appointmentRequest")
+        return try {
+            val response = apiService.editAppointment(id, appointmentRequest)
+            Log.d("API Response", response.toString())
+
+            if (response.isSuccessful) {
+                true
+            } else {
+                Log.e("API Error", response.errorBody()?.string() ?: "Unknown error")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("API Exception", e.message ?: "Error desconocido")
+            false
+        }
+    }
 }
