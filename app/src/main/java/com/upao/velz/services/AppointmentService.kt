@@ -10,7 +10,7 @@ class AppointmentService(context: Context) {
 
     private val appointmentRepository = AppointmentRepository(context)
 
-    suspend fun addAppointment(appointment: Appointment): Boolean{
+    suspend fun addAppointment(appointment: Appointment): Int?{
         return appointmentRepository.addAppointment(appointment)
     }
 

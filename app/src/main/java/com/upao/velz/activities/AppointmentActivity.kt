@@ -19,19 +19,23 @@ import com.google.firebase.auth.FirebaseUser
 import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.AppointmentController
+import com.upao.velz.controllers.PaymentController
 import com.upao.velz.controllers.TreatmentController
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityAppointmentBinding
 import com.upao.velz.models.Appointment
+import com.upao.velz.models.RequestModel.PaymentRequest
 import com.upao.velz.models.Treatment
 import com.upao.velz.models.User
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class AppointmentActivity : AppCompatActivity() {
 
     private val appointmentController = AppointmentController(this)
+    private val paymentController = PaymentController(this)
     private lateinit var binding: ActivityAppointmentBinding
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var llRecuerdame: LinearLayout
@@ -41,6 +45,9 @@ class AppointmentActivity : AppCompatActivity() {
     private var selectedTime: String = " "
     private var selectedReminderTime: Int? = null
     private var treatmentName: String? = null
+    private var treatmentPrice: Int? = null
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val currentDate = dateFormat.format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,6 +111,8 @@ class AppointmentActivity : AppCompatActivity() {
                     Log.d("Email", "Request: $user")
 
                     treatmentName = intent.getStringExtra("treatment_name")
+                    treatmentPrice = intent.getIntExtra("treatment_price", 0)
+
                     val treatmentController = TreatmentController(this)
                     treatmentController.getTreatmentByName(treatmentName.toString()) { treatment ->
                         if (treatment != null) {
@@ -121,10 +130,29 @@ class AppointmentActivity : AppCompatActivity() {
                                 if (isScheduled) {
                                     Toast.makeText(this, "Ya hay una cita agendada ahí", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    appointmentController.addAppointment(appointment)
-                                    Toast.makeText(this, "Cita Registrada con Éxito", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
+                                    appointmentController.addAppointment(appointment){ appointmentId ->
+                                        if (appointmentId != null) {
+                                            Toast.makeText(this, "Cita Registrada con Éxito, Realiza el pago correspondiente", Toast.LENGTH_SHORT).show()
+                                            Log.d("Cita", "Cita postergada con exito ID: $appointmentId")
+
+                                            val payment = PaymentRequest(
+                                                appointmentId = appointmentId,
+                                                amount = treatmentPrice ?:0,
+                                                payment_date = currentDate
+                                            )
+
+                                            paymentController.addPayment(payment)
+
+                                            val intentNiubiz = Intent(this, NiubizActivity::class.java)
+                                            intentNiubiz.putExtra("appointment_id", appointmentId)
+                                            startActivity(intentNiubiz)
+                                            finish()
+
+                                        } else {
+                                            Toast.makeText(this, "Error al registrar la cita", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
                                 }
                             }
                         } else {

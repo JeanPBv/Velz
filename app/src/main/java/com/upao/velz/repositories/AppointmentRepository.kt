@@ -26,7 +26,7 @@ class AppointmentRepository(context: Context) {
     private val apiService = Apiclient.createService(ApiService::class.java)
 
 
-    suspend fun addAppointment(appointment: Appointment): Boolean {
+    suspend fun addAppointment(appointment: Appointment): Int? {
         Log.d("AppointmentRequest", "Request: $appointment")
         val appointmentRequest = AppointmentRequest(
             id = appointment.id,
@@ -40,15 +40,23 @@ class AppointmentRepository(context: Context) {
         return try {
             val response = apiService.addAppointment(appointmentRequest)
             Log.d("API Response", response.toString())
+
+            val appIdResponse = response.body()
             if (response.isSuccessful) {
-                true
+                if (appIdResponse != null) {
+                    Log.d("AppointmentAddId", "Cita agregada con ID: ${appIdResponse.appointmentId}")
+                    return appIdResponse.appointmentId
+                } else {
+                    Log.e("API Error", "Cuerpo vacío en la respuesta.")
+                    return null
+                }
             } else {
                 Log.e("API Error", response.errorBody()?.string() ?: "Unknown error")
-                false
+                return null
             }
         } catch (e: Exception) {
             Log.e("API Exception", e.message ?: "Error desconocido")
-            false
+            return null
         }
     }
 

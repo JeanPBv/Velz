@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.HorizontalScrollView
@@ -14,13 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.upao.velz.R
 import com.upao.velz.controllers.AppointmentController
-import com.upao.velz.controllers.TreatmentController
-import com.upao.velz.controllers.UserController
-import com.upao.velz.databinding.ActivityAppointmentBinding
 import com.upao.velz.databinding.ActivityEditAppointmentBinding
 import com.upao.velz.models.Appointment
 import java.util.Calendar
