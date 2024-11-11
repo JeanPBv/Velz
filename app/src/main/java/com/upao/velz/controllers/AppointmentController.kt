@@ -13,14 +13,10 @@ import kotlinx.coroutines.launch
 class AppointmentController(context: Context) : ViewModel() {
     private val appointmentService = AppointmentService(context)
 
-    fun addAppointment(appointment: Appointment) {
+    fun addAppointment(appointment: Appointment, callback: (Int?) -> Unit) {
         viewModelScope.launch {
-            val success = appointmentService.addAppointment(appointment)
-            if (success) {
-                Log.d("Cita", "Cita agendada con exito")
-            } else {
-                Log.e("Cita", "Error al agendar cita")
-            }
+            val appointmentId = appointmentService.addAppointment(appointment)
+            callback(appointmentId)
         }
     }
 
