@@ -3,6 +3,7 @@ package com.upao.velz.apiLaravel
 import com.upao.velz.models.RequestModel.AppointmentRequest
 import com.upao.velz.models.RequestModel.LoginRequest
 import com.upao.velz.models.RequestModel.PaymentRequest
+import com.upao.velz.models.RequestModel.UserRequest
 import com.upao.velz.models.User
 import com.upao.velz.models.responseModel.AppDetailResponse
 import com.upao.velz.models.responseModel.AppIdResponse
@@ -53,4 +54,7 @@ interface ApiService {
 
     @GET("payment/list/{userId}")
     suspend fun getListPayments(@Path("userId") id: Int): Response<ListPaymentResponse>
+
+    @PUT("user/edit/{id}")
+    suspend fun editUser(@Path("id") id: Int, @Body userRequest: UserRequest): Response<UserResponse>
 }
