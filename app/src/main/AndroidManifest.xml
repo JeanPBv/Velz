@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" android:maxSdkVersion="30"/>
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="30" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Velz"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.DetailsDentistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DentistActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false" />

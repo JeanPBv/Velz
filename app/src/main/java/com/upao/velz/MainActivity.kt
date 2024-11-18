@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.upao.velz.activities.DentistActivity
 import com.upao.velz.activities.DetailAppointmentActivity
 import com.upao.velz.activities.HistoryPayActivity
 import com.upao.velz.activities.LoginActivity
@@ -84,7 +85,8 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_my_doctors -> {
-
+                    val intent = Intent(this, DentistActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_treatments -> {
                     val intent = Intent(this, TreatmentActivity::class.java)
@@ -121,7 +123,8 @@ class MainActivity : AppCompatActivity() {
 
         val cardDoctor: androidx.cardview.widget.CardView = findViewById(R.id.card_doctor)
         cardDoctor.setOnClickListener {
-                // REDIRIGIR
+            val intent = Intent(this, DentistActivity::class.java)
+            startActivity(intent)
         }
 
         val cardHistory: androidx.cardview.widget.CardView = findViewById(R.id.card_history)
