@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.upao.velz.R
+import com.upao.velz.activities.CalificationActivity
 import com.upao.velz.activities.EditAppointmentActivity
 import com.upao.velz.models.responseModel.AppDetailResponse
 
@@ -40,6 +42,7 @@ class AppointmentAdapter(
         private val buttonContainer: LinearLayout = itemView.findViewById(R.id.button_edit_app)
         private val buttonEdit: Button = itemView.findViewById(R.id.btn_appointment)
         private val dentistTextView: TextView = itemView.findViewById(R.id.tv_dentist)
+        private val cardReview: CardView = itemView.findViewById(R.id.cardReview)
 
         fun bind(appointment: AppDetailResponse) {
             val dateParts = appointment.dateAppointment.split("/")
@@ -82,6 +85,18 @@ class AppointmentAdapter(
                 oldTextView.text = "OLD"
                 oldTextView.setTextColor(Color.parseColor("#FF5252"))
                 buttonContainer.visibility = View.GONE
+                cardReview.setOnClickListener {
+                    val intent = Intent(itemView.context, CalificationActivity::class.java).apply {
+                        putExtra("EXTRA_APP_ID", appointment.id)
+                        putExtra("EXTRA_USER_ID", appointment.userId)
+                        putExtra("EXTRA_DENTIST_ID", appointment.dentistId)
+                        putExtra("EXTRA_HASREVIEW", appointment.hasreview)
+                        putExtra("EXTRA_DENTIST_NAME", appointment.dentist.name)
+                        putExtra("EXTRA_DENTIST_LASTNAME", appointment.dentist.lastname)
+                    }
+                    itemView.context.startActivity(intent)
+                }
+
             }
 
             if (appointment.status == "Pendiente") {

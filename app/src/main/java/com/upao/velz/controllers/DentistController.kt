@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.upao.velz.models.Dentist
+import com.upao.velz.models.responseModel.StatsResponse
 import com.upao.velz.services.DentistService
 import kotlinx.coroutines.launch
 
@@ -30,6 +31,17 @@ class DentistController(private val context: Context): ViewModel() {
             } catch (e: Exception) {
                 callback(null)
             }            }
+    }
+
+    fun getStatsDentistId(dentistId: Int, callback: (StatsResponse?) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val stats = dentistService.getStatsDentistIdService(dentistId)
+                callback(stats)
+            } catch (e: Exception){
+                callback(null)
+            }
+        }
     }
 
 }

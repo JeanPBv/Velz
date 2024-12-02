@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_velz"
+    tools:context=".activities.CalificationActivity">
+
+    <LinearLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:id="@+id/tv_list_appointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:textStyle="bold"
+            android:text="CALIFICA EL SERVICIO"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardCalification"
+        android:layout_margin="20dp"
+        app:contentPadding="25dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <FrameLayout
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:background="@drawable/circle_shape"
+                android:backgroundTint="#E0F7FA"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/ivProfilePictureDentist"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/circle_shape"
+                    android:contentDescription="Profile Picture" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/txt_nombre_doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr. Luis Fernández"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/ll_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+
+                <RatingBar
+                    android:id="@+id/rbServiceRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:rating="0"
+                    android:theme="@style/Widget.AppCompat.RatingBar"
+                    android:paddingBottom="16dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_comentario_doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comparte tu opinión"
+                android:textSize="14sp"
+                android:textColor="@color/gray" />
+
+            <EditText
+                android:id="@+id/et_opinion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="Escribe tu reseña acá..."
+                android:gravity="top|start"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="12dp"
+                android:maxLines="10"
+                android:background="@drawable/edittext_background"/>
+
+            <!-- Botón de enviar -->
+            <Button
+                android:id="@+id/btn_enviar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textSize="18sp"
+                android:background="@drawable/rounded_button_background"
+                android:padding="12dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

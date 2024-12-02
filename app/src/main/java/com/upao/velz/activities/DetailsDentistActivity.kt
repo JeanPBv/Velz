@@ -59,6 +59,20 @@ class DetailsDentistActivity : AppCompatActivity() {
         binding.tvDetailSpeciality.text = dentist.specialty
         binding.tvEmailDentist.text = "Contacto: ${dentist.email}"
 
+        dentistController.getStatsDentistId(dentist.id) { stats ->
+            if (stats != null) {
+                binding.tvConsultasSucces.text = stats.completedAppointments.toString()
+                binding.tvConsultasPending.text = stats.pendingAppointments.toString()
+                binding.tvPatients.text = stats.patientsAttended.toString()
+                binding.rbServiceRating.rating = stats.averageRating.toFloat()
+                binding.rbServiceRating.progressTintList = resources.getColorStateList(R.color.green, null)
+            } else {
+                binding.tvConsultasSucces.text = "N/A"
+                binding.tvConsultasPending.text = "N/A"
+                binding.tvPatients.text = "N/A"
+            }
+        }
+
         val servicesContainer = binding.servicesContainer
         servicesContainer.removeAllViews()
 

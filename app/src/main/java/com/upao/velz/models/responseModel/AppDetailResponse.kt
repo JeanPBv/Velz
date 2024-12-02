@@ -11,6 +11,7 @@ data class AppDetailResponse(
     @SerializedName("treatment_id") val treatmentId: Int,
     @SerializedName("user_id") val userId: Int,
     @SerializedName("status") val status: String,
+    @SerializedName("hasreview") val hasreview: Int,
     @SerializedName("reminder") val reminder: Int,
     @SerializedName("treatment") val treatment: TreatmentResponse,
     @SerializedName("dentist") val dentist: DentistResponse

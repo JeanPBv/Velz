@@ -3,6 +3,7 @@ package com.upao.velz.apiLaravel
 import com.upao.velz.models.RequestModel.AppointmentRequest
 import com.upao.velz.models.RequestModel.LoginRequest
 import com.upao.velz.models.RequestModel.PaymentRequest
+import com.upao.velz.models.RequestModel.ReviewRequest
 import com.upao.velz.models.RequestModel.UserRequest
 import com.upao.velz.models.User
 import com.upao.velz.models.responseModel.AppDetailResponse
@@ -11,6 +12,8 @@ import com.upao.velz.models.responseModel.AppointmentResponse
 import com.upao.velz.models.responseModel.DentistResponse
 import com.upao.velz.models.responseModel.ListAppResponse
 import com.upao.velz.models.responseModel.PaymentResponse
+import com.upao.velz.models.responseModel.ReviewResponse
+import com.upao.velz.models.responseModel.StatsResponse
 import retrofit2.Response
 import com.upao.velz.models.responseModel.TreatmentResponse
 import com.upao.velz.models.responseModel.UserResponse
@@ -61,5 +64,15 @@ interface ApiService {
 
     @GET("dentist")
     suspend fun getDentists(): Response<List<DentistResponse>>
+
+    @GET("dentist/stats/{id}")
+    suspend fun getStatsDentist(@Path("id") id: Int): Response<StatsResponse>
+
+    @GET("review/{id}")
+    suspend fun getReviewById(@Path("id") id: Int): Response<ReviewResponse>
+
+    @POST("review/add")
+    suspend fun addReview(@Body reviewRequest: ReviewRequest): Response<PaymentResponse>
+
 
 }
