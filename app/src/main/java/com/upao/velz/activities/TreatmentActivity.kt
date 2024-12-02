@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.adapters.TreatmentAdapter
 import com.upao.velz.controllers.TreatmentController
@@ -29,6 +30,7 @@ class TreatmentActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         controller.getTreatmentController { treatments ->
+            Log.d("TreatmentActivity12345", "Tratamientos recuperados: $treatments")
             adapter = TreatmentAdapter(treatments)
             recyclerView.adapter = adapter
         }
@@ -37,8 +39,6 @@ class TreatmentActivity : AppCompatActivity() {
         val back = findViewById<ImageButton>(R.id.btnBack)
 
         back.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

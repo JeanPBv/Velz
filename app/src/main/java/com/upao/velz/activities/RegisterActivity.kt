@@ -13,9 +13,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityRegisterBinding
+import com.upao.velz.firebase.initializeSecondFirebaseApp
 import com.upao.velz.models.User
 import java.util.regex.Pattern
 
@@ -85,7 +87,7 @@ class RegisterActivity : AppCompatActivity() {
             userController.registerUser(user)
             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this, TreatmentActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
         }

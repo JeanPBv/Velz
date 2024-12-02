@@ -2,17 +2,65 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="30" />
+
     <application
-        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/velz_logo"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/velz_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Velz"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.CalificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SelectDentistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DetailsDentistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DentistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".activities.PdfViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HistoryPayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NiubizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DetailAppointmentActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.DetailTreatActivity"
             android:exported="false" />
@@ -46,6 +94,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

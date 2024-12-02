@@ -19,19 +19,23 @@ import com.google.firebase.auth.FirebaseUser
 import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.AppointmentController
+import com.upao.velz.controllers.PaymentController
 import com.upao.velz.controllers.TreatmentController
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityAppointmentBinding
 import com.upao.velz.models.Appointment
+import com.upao.velz.models.RequestModel.PaymentRequest
 import com.upao.velz.models.Treatment
 import com.upao.velz.models.User
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class AppointmentActivity : AppCompatActivity() {
 
     private val appointmentController = AppointmentController(this)
+    private val paymentController = PaymentController(this)
     private lateinit var binding: ActivityAppointmentBinding
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var llRecuerdame: LinearLayout
@@ -41,6 +45,9 @@ class AppointmentActivity : AppCompatActivity() {
     private var selectedTime: String = " "
     private var selectedReminderTime: Int? = null
     private var treatmentName: String? = null
+    private val dentistId: Int? = null
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val currentDate = dateFormat.format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +65,7 @@ class AppointmentActivity : AppCompatActivity() {
         val reminderTimes = listOf(10, 20, 30, 40, 50, 60, 90)
         createReminderButtons(reminderTimes)
 
-        val listTimes = listOf("09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00")
-        createTimesButtons(listTimes)
+
 
 
         val btnBack: ImageButton = findViewById(R.id.btnBack)
@@ -105,11 +111,14 @@ class AppointmentActivity : AppCompatActivity() {
                     Log.d("Email", "Request: $user")
 
                     treatmentName = intent.getStringExtra("treatment_name")
+                    val dentistId = intent.getIntExtra("dentist_id", 0)
+
                     val treatmentController = TreatmentController(this)
                     treatmentController.getTreatmentByName(treatmentName.toString()) { treatment ->
                         if (treatment != null) {
                             val appointment = Appointment(
                                 0,
+                                dentistId,
                                 selectedDateCalendar,
                                 selectedTime,
                                 treatment.id,
@@ -122,10 +131,29 @@ class AppointmentActivity : AppCompatActivity() {
                                 if (isScheduled) {
                                     Toast.makeText(this, "Ya hay una cita agendada ahí", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    appointmentController.addAppointment(appointment)
-                                    Toast.makeText(this, "Cita Registrada con Éxito", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
+                                    appointmentController.addAppointment(appointment){ appointmentId ->
+                                        if (appointmentId != null) {
+                                            Toast.makeText(this, "Cita Registrada con Éxito, Realiza el pago correspondiente", Toast.LENGTH_SHORT).show()
+                                            Log.d("Cita", "Cita postergada con exito ID: $appointmentId")
+
+                                            val payment = PaymentRequest(
+                                                appointmentId = appointmentId,
+                                                amount = treatment.price,
+                                                payment_date = currentDate
+                                            )
+
+                                            paymentController.addPayment(payment)
+
+                                            val intentNiubiz = Intent(this, NiubizActivity::class.java)
+                                            intentNiubiz.putExtra("appointment_id", appointmentId)
+                                            startActivity(intentNiubiz)
+                                            finish()
+
+                                        } else {
+                                            Toast.makeText(this, "Error al registrar la cita", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
                                 }
                             }
                         } else {
@@ -140,6 +168,7 @@ class AppointmentActivity : AppCompatActivity() {
     }
 
     private fun createTimesButtons(times: List<String>) {
+        llTiempoDisponible.removeAllViews()
         for (time in times) {
             val hourString = time.toString()
             val hour = hourString.split(":")[0].toInt()
@@ -157,19 +186,38 @@ class AppointmentActivity : AppCompatActivity() {
                 hour
             }
 
-
+            val formattedTime = "$hourString $period"
 
             val button = Button(this).apply {
                 // Configuración de los LayoutParams
                 layoutParams = LinearLayout.LayoutParams(70.dp, 70.dp).apply {
                     setMargins(8.dp, 8.dp, 8.dp, 8.dp)
                 }
-                background = resources.getDrawable(R.drawable.rounded_button, null)
-                textSize = 16f
-                text = "$hourString\n$period"
-                setTextColor(resources.getColor(R.color.green, null))
-                setTypeface(null, Typeface.BOLD)
+                var typeColorBottom = false;
 
+                appointmentController.getAppointments { appointments ->
+                    val hasAppointmentsOnSelectedDateAndTime = appointments?.any { appointment ->
+                        appointment.dateAppointment == selectedDateCalendar && appointment.timeAppointment == formattedTime
+                    } ?: false
+
+                    if (hasAppointmentsOnSelectedDateAndTime) {
+                        background = resources.getDrawable(R.drawable.rounded_button_red, null)
+                        setTextColor(resources.getColor(R.color.white, null))
+                        isEnabled = false
+                        typeColorBottom = true;
+                    } else {
+                        background = resources.getDrawable(R.drawable.rounded_button, null)
+                        setTextColor(resources.getColor(R.color.green, null))
+                        isEnabled = true
+                        typeColorBottom = false;
+                    }
+                }
+
+
+                textSize = 16f
+                text = formattedTime
+
+                setTypeface(null, Typeface.BOLD)
 
                 setOnClickListener {
                     if (selectedDate != null) {
@@ -187,7 +235,11 @@ class AppointmentActivity : AppCompatActivity() {
                                 llTiempoDisponible.children.forEach { child ->
                                     if (child is Button) {
                                         child.isSelected = false
-                                        child.setTextColor(resources.getColor(R.color.green, null))
+                                        if(child.isEnabled){
+                                            child.setTextColor(resources.getColor(R.color.green, null))
+                                        } else{
+                                            child.setTextColor(resources.getColor(R.color.white, null))
+                                        }
                                     }
                                 }
 
@@ -199,7 +251,11 @@ class AppointmentActivity : AppCompatActivity() {
                             llTiempoDisponible.children.forEach { child ->
                                 if (child is Button) {
                                     child.isSelected = false
-                                    child.setTextColor(resources.getColor(R.color.green, null))
+                                    if(child.isEnabled){
+                                        child.setTextColor(resources.getColor(R.color.green, null))
+                                    } else{
+                                        child.setTextColor(resources.getColor(R.color.white, null))
+                                    }
                                 }
                             }
 
@@ -293,6 +349,9 @@ class AppointmentActivity : AppCompatActivity() {
 
                 resetSelections()
 
+                val listTimes = listOf("09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00")
+                createTimesButtons(listTimes)
+
                 tvTiempoDisponible.visibility = View.VISIBLE
                 tvRecuerdame.visibility = View.VISIBLE
                 horizontalScrollView.visibility = View.VISIBLE
@@ -317,6 +376,7 @@ class AppointmentActivity : AppCompatActivity() {
             if (child is Button) {
                 child.isSelected = false
                 child.setTextColor(resources.getColor(R.color.green, null))
+                child.background = resources.getDrawable(R.drawable.rounded_button, null)
             }
         }
 

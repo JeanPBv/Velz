@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.upao.velz.MainActivity
 import com.upao.velz.R
 import com.upao.velz.controllers.UserController
 import com.upao.velz.databinding.ActivityLoginBinding
@@ -54,9 +55,11 @@ class LoginActivity : AppCompatActivity() {
 
             userController.loginUser(email, password) { success, error ->
                 if (success) {
-                    val intent = Intent(this, TreatmentActivity::class.java)
+                    Log.e("LOGIN123456", "INGRESAR SESIÓN BIENVENIDO")
+                    val intent = Intent(this, MainActivity::class.java)
+                    Log.e("LOGIN123456", "INGRESAR SESIÓN BIENVENIDO2")
                     startActivity(intent)
-                    finish()
+                    Log.e("LOGIN123456", "AADSSADASD")
                 } else {
                     Toast.makeText(this, error ?: "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
                 }
