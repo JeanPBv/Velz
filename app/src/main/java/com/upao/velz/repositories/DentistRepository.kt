@@ -1,11 +1,13 @@
 package com.upao.velz.repositories
 
 import android.content.Context
+import android.util.Log
 import com.upao.velz.R
 import com.upao.velz.apiLaravel.ApiService
 import com.upao.velz.apiLaravel.Apiclient
 import com.upao.velz.models.Dentist
 import com.upao.velz.models.responseModel.DentistResponse
+import com.upao.velz.models.responseModel.StatsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -113,6 +115,21 @@ class DentistRepository(context: Context) {
     suspend fun getDentistId(context: Context, id: Int): Dentist? {
         val dentists = getDentistRepository(context)
         return dentists.find { it.id == id }
+    }
+
+    suspend fun getStatsDentistId(dentistId: Int): StatsResponse? {
+        return try {
+            val response = apiService.getStatsDentist(dentistId)
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                Log.e("StatsDentist", "Error: ${response.code()} - ${response.message()}")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("StatsDentist", "Error en la llamada a la API: ${e.message}")
+            null
+        }
     }
 
 }
